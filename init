@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+pip3 install -i https://pypi.douban.com/simple -r requirements-base.txt
+
+
+if [ "$(ls -A $ROOT_DIR/service)" ]; then
+    echo "$ROOT_DIR/service is not Empty"
+    pip3 install -i https://pypi.douban.com/simple -r $ROOT_DIR/service/requirements.txt
+else
+    echo "$ROOT_DIR/service Empty"
+    tarpit create service
+fi
+
+cd $ROOT_DIR/service
+tarpit serve

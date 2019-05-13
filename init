@@ -1,12 +1,17 @@
 #!/bin/bash
 
+tarpit create service
+
 if [ "$(ls -A $ROOT_DIR/service)" ]; then
     echo "$ROOT_DIR/service is not empty!"
     pip3 install -i https://pypi.douban.com/simple -r $ROOT_DIR/service/requirements.txt
-else
-    echo "$ROOT_DIR/service is empty. "
-    tarpit create service
+# else
+#     echo "$ROOT_DIR/service is empty. "
+#     tarpit create service
 fi
 
 cd $ROOT_DIR/service
+
+sed -i "s/10086/$PORT/g" "$ROOT_DIR/settings/config.yml"
+
 tarpit serve
